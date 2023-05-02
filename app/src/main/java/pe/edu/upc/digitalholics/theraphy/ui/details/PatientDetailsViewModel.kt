@@ -18,11 +18,11 @@ class PatientDetailsViewModel @Inject constructor(
     private var _patient = MutableLiveData<Patient>()
     val patient get() = _patient
 
-    fun fetchPatientByName(name: String){
+    fun fetchPatientByName(patientId: String){
         viewModelScope.launch {
-            val result = patientRepository.fetchPatientByName(name)
+            val result = patientRepository.fetchReviewPatientById(patientId)
             if (result is Resource.Success){
-           //     _patient.value = result.data!!
+                _patient.value = result.data!!
             }
         }
     }
