@@ -19,11 +19,14 @@ class PatientRepositoryImpl @Inject constructor(
     override suspend fun fetchPatientByName(name: String): Resource<List<Patient>> =
         withContext(Dispatchers.IO) {
         val response = patientService.fetchPatientByName(name)
-        val patient: List<Patient>
+        val patients: List<Patient>
         if (response.isSuccessful && response.body() != null){
             if (response.body()!!.response == "success"){
-                patient = response.body()!!.resultPatient
-                return@withContext Resource.Success(patient)
+                patients = response.body()!!.resultPatient
+                for(patient in patients){
+                    update(patient)
+                }
+                return@withContext Resource.Success(patients)
             }
         }
             return@withContext Resource.Error("No data found")

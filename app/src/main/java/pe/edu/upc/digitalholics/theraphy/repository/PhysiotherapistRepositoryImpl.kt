@@ -18,11 +18,14 @@ class PhysiotherapistRepositoryImpl @Inject constructor(
 
     override suspend fun fetchPhysiotherapistBySpecialization(specialization: String): Resource<List<Physiotherapist>> = withContext(Dispatchers.IO) {
         val response = physiotherapistService.fetchPhysiotherapistBySpecialization(specialization)
-        val physiotherapist: List<Physiotherapist>
+        val physiotherapists: List<Physiotherapist>
         if (response.body()!!.response == "success"){
             if (response.body()!!.response == "success"){
-                physiotherapist = response.body()!!.resultPhysiotherapist
-                return@withContext Resource.Success(physiotherapist)
+                physiotherapists = response.body()!!.resultPhysiotherapist
+                for (physiotherapist in physiotherapists){
+                    update(physiotherapist)
+                }
+                return@withContext Resource.Success(physiotherapists)
             }
         }
         return@withContext Resource.Error("No data found")

@@ -18,11 +18,14 @@ class ReviewRepositoryImpl @Inject constructor(
 
     override suspend fun fetchReviewByStarts(starts: String): Resource<List<Review>> = withContext(Dispatchers.IO) {
         val response = reviewService.fetchReviewByStarts(starts)
-        val review: List<Review>
+        val reviews: List<Review>
         if (response.isSuccessful && response.body()!=null){
             if (response.body()!!.response=="success"){
-                review = response.body()!!.resultReview
-                return@withContext Resource.Success(review)
+                reviews = response.body()!!.resultReview
+                for (review in reviews){
+                    update(review)
+                }
+                return@withContext Resource.Success(reviews)
             }
         }
         return@withContext Resource.Error("No data found")
