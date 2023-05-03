@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'com.google.dagger.hilt.android' version '2.44' apply false
+    id 'com.google.dagger.hilt.android' version '2.44' apply true
 }
 
 android {
@@ -97,4 +97,16 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:${hiltVersion}"
     implementation "androidx.hilt:hilt-navigation-compose:${hiltNavigationVersion}"
 
+    // dependency injection
+
+
+
+    // material
+    def materialVersion="1.8.0"
+    implementation "com.google.android.material:material:${materialVersion}"
+
+
 }
+
+
+

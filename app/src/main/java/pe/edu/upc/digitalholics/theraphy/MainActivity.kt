@@ -1,5 +1,6 @@
 package pe.edu.upc.digitalholics.theraphy
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,37 +11,37 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
+import dagger.hilt.android.WithFragmentBindings
+import pe.edu.upc.digitalholics.theraphy.ui.navigation.Navigation
 import pe.edu.upc.digitalholics.theraphy.ui.theme.TheraphyTheme
 
+
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreate(savedInstaceState: Bundle?) {
+        super.onCreate(savedInstaceState)
         setContent {
             TheraphyTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
+                Surface(color = MaterialTheme.colorScheme.background) {
+                    Navigation()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    TheraphyTheme {
-        Greeting("Android")
+
+@HiltAndroidApp
+class CoreApplication: Application() {
+    override fun onCreate() {
+        super.onCreate()
+        MainActivity()
     }
 }
+
+
+

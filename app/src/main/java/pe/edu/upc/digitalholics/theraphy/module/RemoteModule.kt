@@ -21,7 +21,7 @@ object RemoteModule {
     @Singleton
     @Named("url")
     fun provideApiBaseUrl(): String{
-        return ""
+        return "backendproyectotheraphy-production.up.railway.app/api/v1/"
     }
 
     @Provides
